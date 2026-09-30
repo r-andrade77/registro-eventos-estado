@@ -5,11 +5,9 @@ const char* ssid = "NOME-WIFI";
 const char* senha = "senhaSegura";
 const char* URL_API = "http://10.116.75.98:8080/api/mensagens";
 
-const int LED_1 = 0;
-const int LED_2 = 0;
-const int LED_3 = 0;
-const int LED_4 = 0;
-const int potenciometro = 0;
+const int LED = 0;
+
+const int botao = 0;
 
 
 
@@ -61,53 +59,21 @@ void setup(){
   Serial.begin(9600);
   delay(1000);
   conectarWiFi();
-  pinMode(LED_1, OUTPUT);
-  pinMode(LED_2, OUTPUT);
-  pinMode(LED_3, OUTPUT);
-  pinMode(LED_4, OUTPUT);
-  pinMode(potenciometro, INPUT)
+  pinMode(LED, OUTPUT);
+  pinMode(botao, INPUT_PULLUP)
 }
 
 void loop() {
 
-  int valorPotenciometro = analogRead(potenciometro);
+  bool estadoBotao = analogRead(botao);
+  String estadoLed = "";
 
-  if (valorPotenciometro < 800){
-    digitalWrite(LED_1, LOW)
-    digitalWrite(LED_2, LOW)
-    digitalWrite(LED_3, LOW)
-    digitalWrite(LED_4, LOW)
+  if(estadoBotao = true){
+    estadoLed = "Led Aceso";
+  } else {
+    estadoLed = "Led Apagado";
   }
 
-  if(valorPotenciometro >= 800 && valorPotenciometro <= 1600){
-    digitalWrite(LED_1, HIGH);
-    digitalWrite(LED_3, LOW);
-    digitalWrite(LED_2, LOW);
-    digitalWrite(LED_4, LOW);
-  } 
-  
-  if(valorPotenciometro >= 1601 && valorPotenciometro <= 2400){
-    digitalWrite(LED_1, HIGH);
-    digitalWrite(LED_2, HIGH);
-    digitalWrite(LED_3, LOW);
-    digitalWrite(LED_4, LOW);
-  } 
-  
-  if(valorPotenciometro >= 2401 && valorPotenciometro <= 3200){
-    digitalWrite(LED_1, HIGH);
-    digitalWrite(LED_2, HIGH);
-    digitalWrite(LED_3, HIGH);
-    digitalWrite(LED_4, LOW);
-  } 
-  
-  if(valorPotenciometro > 3200){
-    digitalWrite(LED_1, HIGH);
-    digitalWrite(LED_2, HIGH);
-    digitalWrite(LED_3, HIGH);
-    digitalWrite(LED_4, HIGH);
-  } 
-  
-
-  enviarMensagemParaApi(valorPotenciometro);
+  enviarMensagemParaApi(estadoLed);
   delay(5000);
 }
